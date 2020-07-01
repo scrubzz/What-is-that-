@@ -1,7 +1,7 @@
 import React, { useReducer, useState, useRef } from 'react';
 import * as mobilenet from '@tensorflow-models/mobilenet';
-
 import './App.css';
+import Search from "./components/Search";
 
 const machine = {
   initial: "initial",
@@ -59,9 +59,9 @@ function App() {
   };
 
   const actionButton = {
-    initial: { action: loadModel, text: "Load Model" },
-    loadingModel: { text: "Loading Model..." },
-    modelReady: { action: upload, text: "Upload Image" },
+    initial: { action: loadModel, text: "Start Here" },
+    loadingModel: { text: "Loading Machine Learning Model...." },
+    modelReady: { action: upload, text: "Upload Image for Identification" },
     imageReady: { action: identify, text: "Identify Breed" },
     identifying: { text: "Identifying..." },
     complete: { action: reset, text: "Reset" }
@@ -70,23 +70,37 @@ function App() {
 
 
   return (
-    <div>
-      {showImage && <img src={imageURL} alt="upload-preview" ref={imageRef} />}
-      <input type="file" accept="image/*" capture="camera" onChange={handleUpload} ref={inputRef} />
-      {showResults && (
-        <ul>
-          {results.map(({ className, probability }) => (
-            <li key={className}>{`${className}: %${(probability * 100).toFixed(2
-            )}`}
-            </li>
-          ))}
-        </ul>
-      )}
-      <button onClick={actionButton[appState].action || (() => { })}>
-        {actionButton[appState].text}
-      </button>
+    <div className="body">
+      <div className="image">
+        {showImage && <img src={imageURL} alt="upload-preview" ref={imageRef} />}
+        <div className="filebutton">
+
+          <input type="file" accept="image/*" capture="camera" onChange={handleUpload} ref={inputRef} />
+        </div>
+      </div>
+      <div className="results">
+        {showResults && (
+          <ul>
+            {results.map(({ className, probability }) => (
+              <li key={className}>{`${className}: %${(probability * 100).toFixed(2
+              )}`}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div className="button">
+        <button onClick={actionButton[appState].action || (() => { })}>
+          {actionButton[appState].text}
+        </button>
+      </div>
+      <div className="search">
+        <p>Search below for more information about your breed</p>
+        <Search />
+      </div>
     </div>
   );
 }
+
 
 export default App;

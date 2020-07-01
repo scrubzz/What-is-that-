@@ -1,7 +1,7 @@
-body {
+/* body {
   color: white;
   background: black;
-}
+} */
 
 div {
   display: flex;
@@ -11,7 +11,7 @@ div {
   padding: 30px;
 }
 
-input {
+.filebutton {
   width: 0.1px;
   height: 0.1px;
   opacity: 0;
@@ -20,6 +20,7 @@ input {
   z-index: -1;
 }
 
+.image,
 button,
 label,
 ul {
